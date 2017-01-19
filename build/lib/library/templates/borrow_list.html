@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block body %}
+
+{% if session.logged_in %}
+  <ul class=entries>
+      <table border="1">
+        <tr>
+
+          <th>书号</th>
+          <th>书名</th>
+          <th>借阅人</th>
+          <th>借阅时间</th>
+          <th>归还时间</th>
+          <th>备注</th>
+            <th>操作</th>
+        </tr>
+
+  {% for borrow in borrow_rec %}
+        <tr>
+          <td>{{ borrow.book_no }}</td>
+          <td><h2><a href="{{ borrow.link }}" target="_blank"> {{ borrow.title }}</a></h2></td>
+              <td>{{ borrow.emp_name }}</td>
+              <td>{{ borrow.borrow_date }}</td>
+              <td>{{ borrow.return_date }}</td>
+              <td>{{ borrow.remark }}</td>
+              {% if  borrow.status is equalto "已借出" %}
+                 <td><a href="{{ url_for('borrow_return', book_id=borrow.book_id) }}">归还</a></td>
+              {% else %}
+                 <td><a href="{{ url_for('borrow_return', book_id=borrow.book_id) }}">借阅</a></td>
+              {% endif %}
+        </tr>
+  {% endfor %}
+  </ul>
+    {% endif %}
+{% endblock %}

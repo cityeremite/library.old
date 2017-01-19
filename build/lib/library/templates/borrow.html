@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h1>借还书登记</h1>
+  {% if session.logged_in %}
+    <form action="{{ url_for('borrow_return', book_id=borrow_rec[0].book_id) }}" method=post class=add-book>
+      <dl>
+        {% for book in borrow_rec %}
+            <h2>{{ book.book_id }}</h2>
+            <h2>{{ book.book_no }}</h2>
+            <h2><a href="{{ book.link }}"> {{ book.title }}</a></h2>
+            <dt>借阅人:
+            <dd><input type=text size=30 name=emp_name value="{{ book.emp_name }}">
+            <dt>借阅日期:
+            <dd><input type=text size=30 name=borrow_date value="{{ book.borrow_date }}">
+            <dt>归还日期:
+            <dd><input type=text size=30 name=return_date  value="{{ book.return_date }}">
+            <dt>备注:
+            <dd><textarea name=remark rows=5 cols=40  value="{{ book.remark }}"></textarea>
+            <dt>
+            {% if  book.status is equalto "已借出" %}
+                <input type="radio" name="status" value="可借阅">可借阅
+                <input type="radio" name="status" value="已借出" checked>已借出</dt>
+            {% else %}
+                <input type="radio" name="status" value="可借阅" checked>可借阅
+                <input type="radio" name="status" value="已借出">已借出</dt>
+            {% endif %}
+            <dd><input type=submit value=save>
+        {% endfor %}
+      </dl>
+    </form>
+  {% endif %}
+{% endblock %}

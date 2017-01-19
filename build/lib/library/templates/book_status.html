@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+  <ul class=entries>
+      <table border="1">
+        <tr>
+
+          <th>书号</th>
+          <th>书名</th>
+          <th>状态</th>
+        </tr>
+
+  {% for borrow in borrow_rec %}
+        <tr>
+          <td>{{ borrow.book_no }}</td>
+          <td><h2><a href="{{ borrow.link }}" target="_blank"> {{ borrow.title }}</a></h2></td>
+              <td>{{ borrow.status }}</td>
+        </tr>
+  {% endfor %}
+  </ul>
+
+{% endblock %}

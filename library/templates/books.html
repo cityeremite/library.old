@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <form action="{{ url_for('add_book') }}" method=post class=add-book>
+      <dl>
+        <dt>book_no:
+        <dd><input type=text size=30 name=book_no>
+          <dt>Title:
+        <dd><input type=text size=30 name=title>
+        <dt>link:
+        <dd><input type=text size=30 name=link>
+        <dt>remark:
+        <dd><textarea name=remark rows=5 cols=40></textarea>
+        <dd><input type=submit value=save>
+      </dl>
+    </form>
+
+  <ul class=entries>
+  {% for book in books %}
+    <h2>{{ book.book_no }}</h2>
+        <a href="{{ url_for('del_book', book_id=book.book_id) }}" method=post > 删除 </a>
+    <li><h2><a href="{{ book.link }}" target="_blank"> {{ book.title }}</a></h2>
+    <li><h3>{{ book.remark }}</h3>
+  {% else %}
+    <li><em>There is no books yet!</em>
+  {% endfor %}
+  </ul>
+  {% endif %}
+{% endblock %}
